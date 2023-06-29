@@ -24,8 +24,10 @@ st.markdown(
 )
 
 # load models
-nlp = spacy.load("models/spacy_base/textcat_model_2023-06-25/model-best")
-nlp_distilbert = spacy.load("models/distilbert/textcat_model_transformer_2023-06-23/model-best")
+with st.spinner("Loading NLP models... (note this could take a few min as model can be large)"):
+    nlp = spacy.load("models/spacy_base/textcat_model_2023-06-25/model-best")
+    nlp_distilbert = spacy.load("models/distilbert/textcat_model_transformer_2023-06-23/model-best")
+st.success('Done loading models!')
 
 
 # text input section and seed with default headline
