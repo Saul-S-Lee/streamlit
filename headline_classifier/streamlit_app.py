@@ -14,8 +14,10 @@ def get_category(nlp, model_name, title):
     st.write("predicted score: ", score)
 
 
+# use cache_resource to reduce the number of times the model is loaded 
 @st.cache_resource
 def load_model_from_s3(
+    s3_bucket,
     s3_model_key,
     model_type,
     save_basepath,
@@ -34,8 +36,9 @@ def load_model_from_s3(
             (note this could take a few min as models can be large)
             """
         ):
+            remote_path = os.path.join(s3_bucket, s3_model_key)
             fs = s3fs.S3FileSystem(anon=False)
-            fs.get_file(s3_model_key, save_path)
+            fs.get_file(remote_path, save_path)
 
     save_model_path = os.path.join(save_basepath, model_path)
 
@@ -64,9 +67,7 @@ def load_local_model(model_path, model_type):
 
 
 s3_bucket = st.secrets["S3_BUCKET"]
-s3_model_path = "prod/streamlit/headline_classifier/models/spacy_base/textcat_model_2023-06-25/model-best.zip"
-
-s3_key = os.path.join(s3_bucket, s3_model_path)
+s3_model_key = "prod/streamlit/headline_classifier/models/spacy_base/textcat_model_2023-06-25/model-best.zip"
 
 save_basepath = "models/spacy_base"
 save_filename = "model-best.zip"
@@ -86,13 +87,22 @@ st.markdown(
 # load models
 
 # nlp = spacy.load("models/spacy_base/textcat_model_2023-06-25/model-best")
-nlp_distilbert = load_local_model(
-    "models/distilbert/textcat_model_transformer_2023-06-23/model-best",
-    "distilbert"
+# nlp_distilbert = load_local_model(
+#     "models/distilbert/textcat_model_transformer_2023-06-23/model-best",
+#     "distilbert"
+# )
+
+nlp = load_model_from_s3(
+    s3_bucket, s3_model_key, "spacy_base", save_basepath, save_filename
 )
 
-nlp = load_model_from_s3(s3_key, "spacy_base", save_basepath, save_filename)
-
+nlp_distilbert = load_model_from_s3(
+    s3_bucket,
+    "prod/streamlit/headline_classifier/models/distilbert/textcat_model_2023-06-23/model-best.zip",
+    "distilbert",
+    "models/distilbert",
+    "model-best.zip"
+)
 
 # text input section and seed with default headline
 title = st.text_input("Headline", "Man Walks on Moon")
