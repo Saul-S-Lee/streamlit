@@ -12,9 +12,12 @@ s3_key_spacy_base = """prod/streamlit/headline_classifier/models/spacy_base/
     textcat_model_2023-06-25/model-best.zip"""
 s3_key_distilbert = """prod/streamlit/headline_classifier/models/distilbert/
     textcat_model_2023-06-23/model-best.zip"""
+s3_key_bert = """prod/streamlit/headline_classifier/models/bert/
+    textcat_model_2023-06-23/model-best.zip"""
 
 helper_spacy_base = nlp_model_helper("spacy_base")
 helper_distilbert = nlp_model_helper("distilbert")
+helper_bert = nlp_model_helper("bert")
 
 
 # begin the UI portion of the app
@@ -35,6 +38,10 @@ model_distilbert = helper_distilbert.load_model_from_s3(
     s3_bucket, s3_key_distilbert
 )
 
+model_bert = helper_distilbert.load_model_from_s3(
+    s3_bucket, s3_key_bert
+)
+
 # text input section and seed with default headline
 title = st.text_input("Enter Headline Text:", "Man Walks on Moon")
 
@@ -43,3 +50,4 @@ st.divider()
 st.markdown(f"__Category predictions for the headline phrase: \"{title}\"__")
 get_category(model_spacy_base, helper_spacy_base.model_name, title)
 get_category(model_distilbert, helper_distilbert.model_name, title)
+get_category(model_bert, helper_bert.model_name, title)
