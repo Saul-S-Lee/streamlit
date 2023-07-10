@@ -10,7 +10,7 @@ def get_category(nlp, model_name, title):
     score = max(doc.cats.values())
     st.markdown(f"__Model: {model_name}__")
     st.markdown(f"Predicted Category: {category}")
-    st.markdown(f"Predicted Score: {score:.2f}\n\n")
+    st.markdown(f"Predicted Score: {score:.3f}\n\n")
 
 
 class nlp_model_helper():
