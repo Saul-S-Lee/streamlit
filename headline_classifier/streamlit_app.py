@@ -1,6 +1,6 @@
 import streamlit as st
 
-from utils.models import get_category, nlp_model_helper
+from utils.models import get_predictions, nlp_model_helper
 
 # this app will use pre-trained classifiers to categorize
 # input headline text
@@ -47,7 +47,14 @@ title = st.text_input("Enter Headline Text:", "Man Walks on Moon")
 
 st.divider()
 
+# generate predictions
 st.markdown(f"__Category predictions for the headline phrase: \"{title}\"__")
-get_category(model_spacy_base, helper_spacy_base.model_name, title)
-get_category(model_distilbert, helper_distilbert.model_name, title)
-get_category(model_bert, helper_bert.model_name, title)
+model_list = [
+    (model_spacy_base, helper_spacy_base.model_name),
+    (model_distilbert, helper_distilbert.model_name),
+    (model_bert, helper_bert.model_name),
+]
+
+df = get_predictions(title, model_list)
+
+st.dataframe(df, hide_index=True)

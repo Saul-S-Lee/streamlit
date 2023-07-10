@@ -1,16 +1,37 @@
+import pandas as pd
 import spacy
 import streamlit as st
 import s3fs
 import os
 
 
-def get_category(nlp, model_name, title):
+def get_category(nlp, model_name, title, print_output=False):
+
     doc = nlp(title)
     category = max(doc.cats, key=doc.cats.get)
     score = max(doc.cats.values())
-    st.markdown(f"__Model: {model_name}__")
-    st.markdown(f"Predicted Category: {category}")
-    st.markdown(f"Predicted Score: {score:.3f}\n\n")
+
+    if print_output:
+        st.markdown(f"__Model: {model_name}__")
+        st.markdown(f"Predicted Category: {category}")
+        st.markdown(f"Predicted Score: {score:.3f}\n\n")
+
+    return model_name, category, score
+
+
+def get_predictions(title, model_list):
+
+    predictions_list = []
+    col_names = ["Model Name", "Predicted Category", "Predicted Score"]
+
+    for cur_model, cur_model_name in model_list:
+        predictions_list.append(
+            get_category(cur_model, cur_model_name, title)
+        )
+
+    df = pd.DataFrame(predictions_list, columns=col_names)
+
+    return df
 
 
 class nlp_model_helper():
