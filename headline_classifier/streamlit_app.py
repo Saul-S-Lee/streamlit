@@ -38,6 +38,8 @@ model_distilbert = helper_distilbert.load_model_from_s3(
 # text input section and seed with default headline
 title = st.text_input("Enter Headline Text:", "Man Walks on Moon")
 
+st.divider()
+
 st.markdown(f"__Category predictions for the headline phrase: {title}__")
 get_category(model_spacy_base, helper_spacy_base.model_name, title)
 get_category(model_distilbert, helper_distilbert.model_name, title)
