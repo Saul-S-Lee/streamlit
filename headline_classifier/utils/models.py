@@ -8,9 +8,9 @@ def get_category(nlp, model_name, title):
     doc = nlp(title)
     category = max(doc.cats, key=doc.cats.get)
     score = max(doc.cats.values())
-    st.write(model_name)
-    st.write("predicted category: ", category)
-    st.write("predicted score: ", score)
+    st.markdown(f"__Model: {model_name}__")
+    st.markdown(f"Predicted Category: {category}")
+    st.markdown(f"Predicted Score: {score:.2f}\n\n")
 
 
 class nlp_model_helper():

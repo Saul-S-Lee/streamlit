@@ -40,6 +40,6 @@ title = st.text_input("Enter Headline Text:", "Man Walks on Moon")
 
 st.divider()
 
-st.markdown(f"__Category predictions for the headline phrase: {title}__")
+st.markdown(f"__Category predictions for the headline phrase: \"{title}\"__")
 get_category(model_spacy_base, helper_spacy_base.model_name, title)
 get_category(model_distilbert, helper_distilbert.model_name, title)
