@@ -24,6 +24,12 @@ helper_bert = nlp_model_helper("bert")
 st.markdown("# Headline Title Classifier")
 st.markdown(
     """
+    __The code for this app can be found on Github
+    [here](https://github.com/Saul-S-Lee/streamlit/tree/main/headline_classifier)__.
+    """
+)
+st.markdown(
+    """
     This app will categorize a headline title using a pre-trained
     NLP classifier. Please feel free to try your own headline text.
     """
@@ -58,3 +64,14 @@ model_list = [
 df = get_predictions(title, model_list)
 
 st.dataframe(df, hide_index=True)
+
+st.markdown(
+    """
+    Model Description:
+    - spacy_base: bag-of-words model using `spacy.TextCatBOW.v2`
+    - distilbert: `distilbert-base-uncased` transformer model
+    [more info](https://huggingface.co/distilbert-base-uncased)
+    - bert: `bert-base-uncased` transformer model
+    [more info](https://huggingface.co/bert-base-uncased)
+    """
+)
