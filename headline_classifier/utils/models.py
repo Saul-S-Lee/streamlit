@@ -56,28 +56,30 @@ class nlp_model_helper():
         s3_model_key,
         model_path="model-best",
     ):
+        import shutil
 
         if not os.path.exists(_self.save_basepath):
             os.makedirs(_self.save_basepath)
 
         save_path = os.path.join(_self.save_basepath, _self.save_filename)
 
-        if not os.path.exists(save_path):
-            with st.spinner(
-                f"""Loading NLP ({_self.model_name}) models...
-                (note this could take a few min as models can be large)
-                """
-            ):
-                remote_path = os.path.join(s3_bucket, s3_model_key)
-                fs = s3fs.S3FileSystem(anon=False)
-                fs.get_file(remote_path, save_path)
+        # get the file from S3
+        with st.spinner(
+            f"""Loading NLP ({_self.model_name}) models...
+            (note this could take a few min as models can be large)
+            """
+        ):
+            remote_path = os.path.join(s3_bucket, s3_model_key)
+            fs = s3fs.S3FileSystem(anon=False)
+            fs.get_file(remote_path, save_path)
 
         save_model_path = os.path.join(_self.save_basepath, model_path)
 
-        if not os.path.exists(save_model_path):
-            import shutil
+        # unpack the zip file
+        shutil.unpack_archive(save_path, save_model_path)
 
-            shutil.unpack_archive(save_path, save_model_path)
+        # delete the zip file to save room
+        os.remove(save_path)
 
         model = spacy.load(save_model_path)
 
