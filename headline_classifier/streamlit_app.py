@@ -50,7 +50,7 @@ model_distilbert = helper_distilbert.load_model_from_s3(
     s3_bucket, s3_key_distilbert
 )
 
-model_bert = helper_distilbert.load_model_from_s3(
+model_bert = helper_bert.load_model_from_s3(
     s3_bucket, s3_key_bert
 )
 
