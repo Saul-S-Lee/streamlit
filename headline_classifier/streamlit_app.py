@@ -8,12 +8,18 @@ from utils.models import get_predictions, nlp_model_helper
 
 # setup variables
 s3_bucket = st.secrets["S3_BUCKET"]
-s3_key_spacy_base = """prod/streamlit/headline_classifier/models/spacy_base/
-    textcat_model_2023-06-25/model-best.zip"""
-s3_key_distilbert = """prod/streamlit/headline_classifier/models/distilbert/
-    textcat_model_2023-06-23/model-best.zip"""
-s3_key_bert = """prod/streamlit/headline_classifier/models/bert/
-    textcat_model_2023-06-23/model-best.zip"""
+s3_key_spacy_base = (
+    "prod/streamlit/headline_classifier/models/spacy_base/"
+    "textcat_model_2023-06-25/model-best.zip"
+)
+s3_key_distilbert = (
+    "prod/streamlit/headline_classifier/models/distilbert/"
+    "textcat_model_2023-06-23/model-best.zip"
+)
+s3_key_bert = (
+    "prod/streamlit/headline_classifier/models/bert/"
+    "textcat_model_2023-06-23/model-best.zip"
+)
 
 helper_spacy_base = nlp_model_helper("spacy_base")
 helper_distilbert = nlp_model_helper("distilbert")
