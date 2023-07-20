@@ -3,7 +3,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-# this is the hello world app to test out streamlit
+# this is a hello world app to test out streamlit
 
 st.markdown("# Hello!")
 
