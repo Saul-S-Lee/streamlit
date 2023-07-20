@@ -1,3 +1,3 @@
 # hello
 
-This is the hello world app to test out Streamlit
+This is a hello world app to test out Streamlit
