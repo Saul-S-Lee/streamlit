@@ -5,6 +5,8 @@ This folder contains the notebooks and supporting files used to train the Spacy 
 ## Training data
 This model was trained using the News Category Dataset that is freely available on Kaggle [here](https://www.kaggle.com/datasets/rmisra/news-category-dataset). Some preprocessing was required to extract and convert the data from the json format to the Spacy doc format.
 
+The notebook for the data prep can be found in [data_prep.ipynb](data_prep.ipynb). Note: the notebook expects the raw data file to be stored in folder name `data` in the same path.
+
 ## Environment
 The models were trained on a Nvidia GPU-enabled Windows 11 machine running Ubuntu in WSL2. Though not stricly necessary, an Nvidia GPU did speed up the training process.
 
